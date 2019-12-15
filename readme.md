@@ -1,6 +1,10 @@
-# React Starter Template
+# Database for CalTrack
 
-Get started with React with this starter template. Webpack and Babel are included, as well as style loaders.
+This is the database used by CalTrack. To contribute, follow the instructions below:
+
+## Clone the code
+
+      $ git clone https://github.com/jarodpeachey/CalTrackDatabase.git
 
 ## Install the dependencies
 
