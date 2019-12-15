@@ -6,7 +6,10 @@ CREATE TABLE users (
   userID INT AUTO_INCREMENT PRIMARY KEY,
   username VARCHAR(255) NOT NULL,
   email VARCHAR(255) NOT NULL,
-  hashpassword VARCHAR(255) NOT NULL UNIQUE
+  hashpassword VARCHAR(255) NOT NULL UNIQUE,
+  caloriesGained INT NOT NULL,
+  caloriesLost INT NOT NULL,
+  netCalories INT NOT NULL,
 );
 
 CREATE TABLE meals (
