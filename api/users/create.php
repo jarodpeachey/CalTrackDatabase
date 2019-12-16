@@ -1,32 +1,5 @@
 <?php
 header("Access-Control-Allow-Origin: *");
-// $createDatabaseQuery = "
-//   CREATE DATABASE IF NOT EXISTS caltrack;
-
-//   USE caltrack;
-
-//   CREATE TABLE IF NOT EXISTS meals (
-//     mealID INT AUTO_INCREMENT PRIMARY KEY,
-//     mealName VARCHAR(255) NOT NULL,
-//     calories int NOT NULL,
-//     userID INT,
-//     CONSTRAINT caltrack_meal
-//     FOREIGN KEY (userID)
-//       REFERENCES users(userID)
-//   );
-
-//   CREATE TABLE IF NOT EXISTS workouts (
-//     workoutID INT AUTO_INCREMENT PRIMARY KEY,
-//     workoutName VARCHAR(255) NOT NULL,
-//     calories int NOT NULL,
-//     userID INT,
-//     CONSTRAINT caltrack_workout
-//     FOREIGN KEY (userID)
-//       REFERENCES users(userID)
-//   );
-// ";
-
-// mysqli_query($conn, $createDatabaseQuery);
 
 // Get the request method and assign it to variable
 $requestMethod = $_SERVER["REQUEST_METHOD"];

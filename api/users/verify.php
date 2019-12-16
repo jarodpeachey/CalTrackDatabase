@@ -1,22 +1,23 @@
 <?php
-  // Get the request method and assign it to variable
-  $requestMethod = $_SERVER["REQUEST_METHOD"];
+header("Access-Control-Allow-Origin: *");
 
-  // Include the Database.php file
-  include('../class/Database.php');
+// Get the request method and assign it to variable
+$requestMethod = $_SERVER["REQUEST_METHOD"];
 
-  // Set api to a new Database object
-  $api = new Database();
+// Include the Database.php file
+include('../class/Database.php');
 
-  // Check if method === post
-  switch($requestMethod) {
-    case 'POST':
-      // Call the insert user method
-      $api->verifyUser($_POST);
-      break;
-    default:
-      // Send request header as Method Not Allowed
-      header("HTTP/1.0 405 Method Not Allowed");
-      break;
-  }
-?>
+// Set api to a new Database object
+$api = new Database();
+
+// Check if method === post
+switch ($requestMethod) {
+  case 'POST':
+    // Call the insert user method
+    $api->verifyUser($_POST);
+    break;
+  default:
+    // Send request header as Method Not Allowed
+    header("HTTP/1.0 405 Method Not Allowed");
+    break;
+}

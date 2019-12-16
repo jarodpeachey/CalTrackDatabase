@@ -112,11 +112,14 @@ class Database
           // Passwords match - set session variable loggedInUser
           $_SESSION['loggedInUser'] = [
             "name" => $row['username'],
-            "email" => $row['email']
+            "email" => $row['email'],
+            "caloriesGained" => $row['caloriesGained'],
+            "caloriesLost" => $row['caloriesLost'],
+            "netCalories" => $row['netCalories'],
           ];
 
           // Send response data
-          echo json_encode(["match" => true]);
+          echo json_encode(["match" => true, "user" => $_SESSION['loggedInUser']]);
         } else {
           // Passwords do not match - send response data
           echo json_encode(["match" => false, "other" => "Password does not match"]);
