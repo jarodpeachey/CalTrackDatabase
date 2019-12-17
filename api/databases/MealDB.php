@@ -22,24 +22,6 @@ class MealDB
         $this->dbConnect = $conn;
       }
     }
-
-    $query = "
-      CREATE TABLE meals (
-        mealID INT AUTO_INCREMENT PRIMARY KEY,
-        mealName VARCHAR(255) NOT NULL,
-        calories int NOT NULL,
-        userID INT,
-        CONSTRAINT caltrack_meal
-        FOREIGN KEY (userID)
-          REFERENCES users(userID)
-      );
-    ";
-
-    if ($conn->query($query) === TRUE) {
-      echo "Created meals table!";
-    } else {
-      echo "Error creating database: " . $conn->error;
-    }
   }
 
   function getMeals($userID)
@@ -64,4 +46,28 @@ class MealDB
 
     header('Content-Type: application/json');
   } // End getMeals
+
+  function addMeal($userData)
+  {
+    if ($this->dbConnect) {
+      //Set variables from form
+      $mealName = $userData['mealName'];
+      $mealCalories = $userData['mealCalories'];
+      $mealDescription = $userData['mealDescription'];
+      $userID = $userData['userID'];
+
+      // Email does not exist - insert user
+      $addMealQuery = "INSERT INTO meals (mealName, mealCalories, mealDescription, userID)
+            VALUES ('$mealName', '$mealCalories', '$mealDescription', '$userID');";
+
+      // Check if query succeeded and send response
+      if ($this->dbConnect->query($addMealQuery)) {
+        echo json_encode(["success" => true]);
+      } else {
+        echo json_encode(["success" => false]);
+      }
+
+      header('Content-Type: application/json');
+    }
+  } // End addMeal()
 }

@@ -5,16 +5,16 @@ header("Access-Control-Allow-Origin: *");
 $requestMethod = $_SERVER["REQUEST_METHOD"];
 
 // Include the UserDB.php file
-include('../class/UserDB.php');
+include('../databases/MealDB.php');
 
-// Set api to a new Database object
-$api = new Database();
+// Set api to a new MealDB object
+$api = new MealDB();
 
 // Check if method === post
 switch ($requestMethod) {
   case 'POST':
     // Call the insert user method
-    $api->createUser($_POST);
+    $api->addMeal($_POST);
     break;
   default:
     // Send request header as Method Not Allowed

@@ -15,7 +15,8 @@ CREATE TABLE users (
 CREATE TABLE meals (
   mealID INT AUTO_INCREMENT PRIMARY KEY,
   mealName VARCHAR(255) NOT NULL,
-  calories int NOT NULL,
+  mealCalories int NOT NULL,
+  mealDescription VARCHAR(255) NOT NULL,
   userID INT,
   CONSTRAINT caltrack_meal
   FOREIGN KEY (userID)
@@ -25,7 +26,8 @@ CREATE TABLE meals (
 CREATE TABLE workouts (
   workoutID INT AUTO_INCREMENT PRIMARY KEY,
   workoutName VARCHAR(255) NOT NULL,
-  calories int NOT NULL,
+  workoutCalories int NOT NULL,
+  workoutDescription VARCHAR(255) NOT NULL,
   userID INT,
   CONSTRAINT caltrack_workout
   FOREIGN KEY (userID)
