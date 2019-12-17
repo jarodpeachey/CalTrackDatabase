@@ -1,6 +1,4 @@
 <?php
-// Start a session
-session_start();
 
 // Database class
 class WorkoutDB
