@@ -45,6 +45,30 @@ class Database
         );
       ";
 
+      $query .= "
+        CREATE TABLE meals (
+          mealID INT AUTO_INCREMENT PRIMARY KEY,
+          mealName VARCHAR(255) NOT NULL,
+          calories int NOT NULL,
+          userID INT,
+          CONSTRAINT caltrack_meal
+          FOREIGN KEY (userID)
+            REFERENCES users(userID)
+        );
+      ";
+
+      $query .= "
+        CREATE TABLE workouts (
+          workoutID INT AUTO_INCREMENT PRIMARY KEY,
+          workoutName VARCHAR(255) NOT NULL,
+          calories int NOT NULL,
+          userID INT,
+          CONSTRAINT caltrack_workout
+          FOREIGN KEY (userID)
+            REFERENCES users(userID)
+        );
+      ";
+
       if ($conn->multi_query($query) === TRUE) {
         $this->dbConnect = new mysqli($this->host, $this->user, $this->password, $this->database);
       } else {
@@ -109,13 +133,17 @@ class Database
 
         // Check password against hash from db
         if (password_verify("$userPassword", $row['hashpassword'])) {
-          // Passwords match - set session variable loggedInUser
+          $meals = $this->getMeals($row['userID']);
+          $workouts = $this->getMeals($row['userID']);
+
           $_SESSION['loggedInUser'] = [
             "name" => $row['username'],
             "email" => $row['email'],
             "caloriesGained" => $row['caloriesGained'],
             "caloriesLost" => $row['caloriesLost'],
             "netCalories" => $row['netCalories'],
+            "meals" => $meals,
+            "workouts" => $workouts,
           ];
 
           // Send response data
@@ -138,4 +166,50 @@ class Database
     // Return loggedInUser session variable
     echo json_encode($_SESSION['loggedInUser']);
   } // End getUser()
+
+  function getMeals($userID)
+  {
+    $meals = [];
+
+    // Check if email already exists in db
+    $mealQuery = "SELECT mealName,calories FROM meals WHERE userID='$userID'";
+
+    // Set response
+    $response = $this->dbConnect->query($mealQuery);
+
+    // Check if response exists
+    if ($response->num_rows > 0) {
+      // While there is a row, fetch the data from the response
+      while ($row = $response->fetch_assoc()) {
+        $meals[] = $row;
+      }
+    }
+
+    return $meals;
+
+    header('Content-Type: application/json');
+  } // End getMeals
+
+  function getWorkouts($userID)
+  {
+    $workouts = [];
+
+    // Check if email already exists in db
+    $mealQuery = "SELECT workoutName,calories FROM workouts WHERE userID='$userID'";
+
+    // Set response
+    $response = $this->dbConnect->query($mealQuery);
+
+    // Check if response exists
+    if ($response->num_rows > 0) {
+      // While there is a row, fetch the data from the response
+      while ($row = $response->fetch_assoc()) {
+        $workouts[] = $row;
+      }
+    }
+
+    return $workouts;
+
+    header('Content-Type: application/json');
+  } // End getWorkouts
 }
