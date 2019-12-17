@@ -1,9 +1,11 @@
 <?php
 // Start a session
 session_start();
+include('./MealDB.php');
+include('./WorkoutDB.php');
 
 // Database class
-class Database
+class UserDB
 {
   // Database variables
   private $host  = 'localhost';
@@ -133,8 +135,10 @@ class Database
 
         // Check password against hash from db
         if (password_verify("$userPassword", $row['hashpassword'])) {
-          $meals = $this->getMeals($row['userID']);
-          $workouts = $this->getMeals($row['userID']);
+          $mealDB = new MealDB();
+          $workoutDB = new WorkoutDB();
+          $meals = $mealDB->getMeals($row['userID']);
+          $workouts = $workoutDB->getMeals($row['userID']);
 
           $_SESSION['loggedInUser'] = [
             "name" => $row['username'],

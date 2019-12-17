@@ -4,11 +4,11 @@ header("Access-Control-Allow-Origin: *");
 // Get the request method and assign it to variable
 $requestMethod = $_SERVER["REQUEST_METHOD"];
 
-// Include the Database.php file
-include('../class/Database.php');
+// Include the UserDB.php file
+include('../databases/UserDB.php');
 
 // Set api to a new Database object
-$api = new Database();
+$api = new UserDB();
 
 // Check if method === post
 switch ($requestMethod) {
