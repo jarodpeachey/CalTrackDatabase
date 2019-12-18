@@ -8,18 +8,18 @@ class MealDB
   private $password   = "root"; // Change this
   private $database  = "caltrack";
   private $table = 'meals';
-  private $dbConnect = false;
+  private $conn = false;
   private $loggedInUser;
 
   // Constructor
   public function __construct()
   {
-    if (!$this->dbConnect) {
+    if (!$this->conn) {
       $conn = new mysqli($this->host, $this->user, $this->password, $this->database);
       if ($conn->connect_error) {
         die("Error failed to connect to MySQL: " . $conn->connect_error);
       } else {
-        $this->dbConnect = $conn;
+        $this->conn = $conn;
       }
     }
   }
@@ -32,7 +32,7 @@ class MealDB
     $mealQuery = "SELECT mealName,calories FROM meals WHERE userID='$userID'";
 
     // Set response
-    $response = $this->dbConnect->query($mealQuery);
+    $response = $this->conn->query($mealQuery);
 
     // Check if response exists
     if ($response->num_rows > 0) {
@@ -49,7 +49,7 @@ class MealDB
 
   function addMeal($userData)
   {
-    if ($this->dbConnect) {
+    if ($this->conn) {
       //Set variables from form
       $mealName = $userData['mealName'];
       $mealCalories = $userData['mealCalories'];
@@ -61,7 +61,7 @@ class MealDB
             VALUES ('$mealName', '$mealCalories', '$mealDescription', '$userID');";
 
       // Check if query succeeded and send response
-      if ($this->dbConnect->query($addMealQuery)) {
+      if ($this->conn->query($addMealQuery)) {
         echo json_encode(["success" => true]);
       } else {
         echo json_encode(["success" => false]);

@@ -9,18 +9,18 @@ class WorkoutDB
   private $password   = "root"; // Change this
   private $database  = "caltrack";
   private $table = 'workouts';
-  private $dbConnect = false;
+  private $conn = false;
   private $loggedInUser;
 
   // Constructor
   public function __construct()
   {
-    if (!$this->dbConnect) {
+    if (!$this->conn) {
       $conn = new mysqli($this->host, $this->user, $this->password, $this->database);
       if ($conn->connect_error) {
         die("Error failed to connect to MySQL: " . $conn->connect_error);
       } else {
-        $this->dbConnect = $conn;
+        $this->conn = $conn;
       }
     }
 
@@ -51,7 +51,7 @@ class WorkoutDB
     $workoutQuery = "SELECT workoutName,calories FROM workouts WHERE userID='$userID'";
 
     // Set response
-    $response = $this->dbConnect->query($workoutQuery);
+    $response = $this->conn->query($workoutQuery);
 
     // Check if response exists
     if ($response->num_rows > 0) {

@@ -3,30 +3,26 @@
 session_start();
 
 // Database class
-class UserDB
+class Database
 {
   // Database variables
   private $host  = 'localhost';
   private $user  = 'soft'; // Change this
   private $password   = "root"; // Change this
-  private $database  = "caltrack";
-  private $table = 'users';
+  private $dbName  = "caltrack";
   private $conn = false;
-  private $loggedInUser;
 
   // Constructor
   public function __construct()
   {
-    if (!$this->conn) {
-      $conn = new mysqli($this->host, $this->user, $this->password);
-      if ($conn->connect_error) {
-        // die("Error failed to connect to MySQL: " . $conn->connect_error);
-      } else {
-        $this->conn = $conn;
-      }
+    $conn = new mysqli($this->host, $this->user, $this->password);
+    if ($conn->connect_error) {
+      die("Error failed to connect to MySQL: " . $conn->connect_error);
+    } else {
+      $this->conn = $conn;
     }
 
-    if (!mysqli_select_db($conn, $this->database)) {
+    if (!mysqli_select_db($conn, $this->dbName)) {
       $query = "
         CREATE DATABASE IF NOT EXISTS caltrack;
       ";
@@ -72,13 +68,29 @@ class UserDB
       ";
 
       if ($conn->multi_query($query) === TRUE) {
-        $this->conn = new mysqli($this->host, $this->user, $this->password, $this->database);
+        $this->conn = new mysqli($this->host, $this->user, $this->password, $this->dbName);
       } else {
         echo "Error creating database: " . $conn->error;
       }
     }
 
-    mysqli_select_db($conn, $this->database);
+    mysqli_select_db($conn, $this->dbName);
+  }
+
+  public function getConnection()
+  {
+    if ($this->conn) {
+      return $this->conn;
+    } else {
+      $conn = new mysqli($this->host, $this->user, $this->password, $this->dbName);
+      if ($conn->connect_error) {
+        die("Error failed to connect to MySQL: " . $conn->connect_error);
+      } else {
+        $this->conn = $conn;
+      }
+    }
+    
+    return $this->conn;
   }
 
   function createUser($userData)
@@ -172,7 +184,7 @@ class UserDB
       $query = "SELECT * FROM users";
     }
 
-    $response = $this->conn->query($query); 
+    $response = $this->conn->query($query);
 
     // Check if response exists
     if ($response->num_rows > 0) {
