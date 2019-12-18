@@ -18,4 +18,4 @@ $conn = $database->getConnection();
 
 $user = new User($conn);
 
-$user->createUser($_POST);
+$user->verifyUser($_POST);
