@@ -21,19 +21,23 @@ class Meal
     $mealName = htmlspecialchars($mealName);
     $mealCalories = htmlspecialchars($mealCalories);
     $mealDescription = htmlspecialchars($mealDescription);
-    $userID = htmlspecialchars($userID);
 
     // Email does not exist - insert meal
     $insertMealQuery = "INSERT INTO meals (mealname, mealCalories, mealDescription, userID)
             VALUES (?, ?, ?, ?);";
 
+    $mealName = $mealName;
+    $mealDescription = $mealDescription;
+    $mealCalories = $mealCalories;
+
     $stmt = $this->conn->prepare($insertMealQuery);
-    $stmt->bind_param("sisi", $mealName, $mealCalories, $mealDescription, $userID);
+    $stmt->bind_param("ssss", $mealName, $mealCalories, $mealDescription, $userID);
 
     // Check if query succeeded and send response
     if ($stmt->execute()) {
       echo json_encode(["success" => true]);
     } else {
+      die('execute() failed: ' . htmlspecialchars($stmt->error));
       echo json_encode(["success" => false]);
     }
 

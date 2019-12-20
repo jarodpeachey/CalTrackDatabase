@@ -38,33 +38,35 @@ class Database
           caloriesGained INT NOT NULL,
           caloriesLost INT NOT NULL,
           netCalories INT NOT NULL
-        );
+        ) ENGINE=InnoDB;
       ";
 
       $query .= "
         CREATE TABLE meals (
-          mealID INT AUTO_INCREMENT PRIMARY KEY,
+          mealID INT AUTO_INCREMENT,
           mealName VARCHAR(255) NOT NULL,
           mealCalories int NOT NULL,
           mealDescription VARCHAR(255) NOT NULL,
           userID INT,
-          CONSTRAINT caltrack_meal
+          PRIMARY KEY (mealID),
+          CONSTRAINT FK_users_meals
           FOREIGN KEY (userID)
             REFERENCES users(userID)
-        );
+        ) ENGINE=InnoDB;
       ";
 
       $query .= "
         CREATE TABLE workouts (
-          workoutID INT AUTO_INCREMENT PRIMARY KEY,
+          workoutID INT AUTO_INCREMENT,
           workoutName VARCHAR(255) NOT NULL,
           workoutCalories int NOT NULL,
           workoutDescription VARCHAR(255) NOT NULL,
           userID INT,
-          CONSTRAINT caltrack_workout
+          PRIMARY KEY (workoutID),
+          CONSTRAINT FK_users_workouts
           FOREIGN KEY (userID)
             REFERENCES users(userID)
-        );
+        ) ENGINE=InnoDB;
       ";
 
       if ($conn->multi_query($query) === TRUE) {

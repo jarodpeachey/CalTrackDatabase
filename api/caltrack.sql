@@ -18,7 +18,7 @@ CREATE TABLE meals (
   mealCalories int NOT NULL,
   mealDescription VARCHAR(255) NOT NULL,
   userID INT,
-  CONSTRAINT caltrack_meal
+  CONSTRAINT users
   FOREIGN KEY (userID)
     REFERENCES users(userID)
 );
@@ -29,7 +29,7 @@ CREATE TABLE workouts (
   workoutCalories int NOT NULL,
   workoutDescription VARCHAR(255) NOT NULL,
   userID INT,
-  CONSTRAINT caltrack_workout
+  CONSTRAINT user
   FOREIGN KEY (userID)
     REFERENCES users(userID)
 );
