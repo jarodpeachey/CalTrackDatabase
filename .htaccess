@@ -1,0 +1,9 @@
+RewriteEngine On
+RewriteRule ^api/users/([0-9]+)/?$ api/users.php?userID=$1 [NC,L]
+RewriteRule ^api/users/?$ api/users.php [NC,L]
+RewriteRule ^api/users/([0-9]+)/meals/([0-9]+)?$ api/meals.php?userID=$1&mealID=$2 [NC,L]
+RewriteRule ^api/users/([0-9]+)/meals api/meals.php?userID=$1 [NC,L]
+RewriteRule ^api/meals/?$ api/meals.php [NC,L]
+RewriteRule ^api/users/([0-9]+)/workouts/([0-9]+)?$ api/workouts.php?userID=$1&mealID=$2 [NC,L]
+RewriteRule ^api/users/([0-9]+)/workoutsapi/workouts.php?userID=$1 [NC,L]
+RewriteRule ^api/workouts/?$ api/workouts.php [NC,L]
