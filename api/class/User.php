@@ -74,7 +74,6 @@ class User
     if ($this->checkIfEmailExists($userEmail)) {
       $checkEmailQuery = "SELECT * FROM users WHERE email = '$userEmail'";
       $response = $this->conn->query($checkEmailQuery);
-      $numberofrows = $response->num_rows;
 
       if ($response->num_rows > 0) {
         // While there is a row, fetch the data from the response
@@ -116,7 +115,7 @@ class User
     $meals = [];
 
     // Check if email already exists in db
-    $mealQuery = "SELECT mealName,calories FROM meals WHERE userID='$userID'";
+    $mealQuery = "SELECT mealName,mealCalories FROM meals WHERE userID='$userID'";
 
     // Set response
     $response = $this->conn->query($mealQuery);

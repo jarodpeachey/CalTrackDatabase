@@ -11,19 +11,14 @@ class Meal
     $this->conn = $db;
   }
 
-  function addMeal($mealData)
+  function addMeal($mealName, $mealCalories, $mealDescription, $userID)
   {
-    $mealName = $mealData['name'];
-    $mealCalories = $mealData['calories'];
-    $mealDescription = $mealData['description'];
-    $userID = $mealData['userID'];
-
     $mealName = htmlspecialchars($mealName);
     $mealCalories = htmlspecialchars($mealCalories);
     $mealDescription = htmlspecialchars($mealDescription);
 
     // Email does not exist - insert meal
-    $insertMealQuery = "INSERT INTO meals (mealname, mealCalories, mealDescription, userID)
+    $insertMealQuery = "INSERT INTO meals (mealName, mealCalories, mealDescription, userID)
             VALUES (?, ?, ?, ?);";
 
     $mealName = $mealName;
@@ -31,7 +26,7 @@ class Meal
     $mealCalories = $mealCalories;
 
     $stmt = $this->conn->prepare($insertMealQuery);
-    $stmt->bind_param("ssss", $mealName, $mealCalories, $mealDescription, $userID);
+    $stmt->bind_param("sssd", $mealName, $mealCalories, $mealDescription, $userID);
 
     // Check if query succeeded and send response
     if ($stmt->execute()) {

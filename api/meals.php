@@ -28,10 +28,10 @@ switch ($requestMethod) {
     }
     break;
   case 'POST':
-    if (!empty($_POST["userID"]) && !empty($_POST['mealID'])) {
+    if (!empty($_GET["userID"]) && !empty($_GET['mealID'])) {
       // Code for updating meal
-    } else if (!empty($_POST['userID'])) {
-      $meal->addMeal($_POST);
+    } else if (!empty($_GET['userID'])) {
+      $meal->addMeal($_POST['mealName'], $_POST['mealCalories'], $_POST['mealDescription'], $_GET['userID']);
     }
     break;
   default:
@@ -39,7 +39,3 @@ switch ($requestMethod) {
     header("HTTP/1.0 405 Method Not Allowed");
     break;
 }
-
-$meal = new Meal($conn);
-
-$meal->addMeal($_POST);
