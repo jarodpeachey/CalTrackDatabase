@@ -115,7 +115,7 @@ class User
     $meals = [];
 
     // Check if email already exists in db
-    $mealQuery = "SELECT mealName,mealCalories,mealID FROM meals WHERE userID='$userID'";
+    $mealQuery = "SELECT mealID,mealName,mealCalories FROM meals WHERE userID='$userID'";
 
     // Set response
     $response = $this->conn->query($mealQuery);
@@ -138,7 +138,7 @@ class User
     $workouts = [];
 
     // Check if email already exists in db
-    $mealQuery = "SELECT workoutName,workoutCalories,workoutID FROM workouts WHERE userID='$userID'";
+    $mealQuery = "SELECT workoutID,workoutName,workoutCalories FROM workouts WHERE userID='$userID'";
 
     // Set response
     $response = $this->conn->query($mealQuery);
