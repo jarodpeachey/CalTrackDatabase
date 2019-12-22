@@ -1,4 +1,7 @@
 RewriteEngine On
+
+RewriteRule ^api/no-cors/?$ api/no-cors.php [NC,L]
+
 RewriteRule ^api/users/([0-9]+)/?$ api/users.php?userID=$1 [NC,L]
 RewriteRule ^api/users/?$ api/users.php [NC,L]
 RewriteRule ^api/users/([0-9]+)/meals/([0-9]+)?$ api/meals.php?userID=$1&mealID=$2 [NC,L]

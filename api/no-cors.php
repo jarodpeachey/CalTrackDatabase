@@ -8,28 +8,16 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 
 $requestMethod = $_SERVER['REQUEST_METHOD'];
 
-include('./config/database.php');
-include('./class/meal.php');
-
-// Set api to a new Database object
-$database = new Database();
-$conn = $database->getConnection();
-$meal = new Meal($conn);
-
-// Check if method === post
 switch ($requestMethod) {
   case 'GET':
-    if (!empty($_GET["userID"]) && !empty($_GET['mealID'])) {
-      // Code for getting meal by user and ID
-    } else if (!empty($_GET['userID'])) {
-      // Code for getting all meals by user
-    } else {
-      // Code for getting ALL meals
-    }
-    break;
+    $URL = $_GET['url'];
   case 'POST':
-    $meal->addMeal($_POST);
-    break;
+    $URL = $_POST['url'];
   case 'PUT':
-    $meal->addMeal($_PUT);
+    $URL = $_PUT['url'];
+  default:
+    $URL = $_GET['url'];
 }
+
+echo json_encode([($URL)]);
+die();
