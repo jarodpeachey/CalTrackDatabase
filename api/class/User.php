@@ -84,7 +84,7 @@ class User
             $meals = $this->getMeals($row['userID']);
             $workouts = $this->getWorkouts($row['userID']);
 
-            $_SESSION['loggedInUser'] = [
+            $userToReturn = [
               "userID" => $row['userID'],
               "name" => $row['username'],
               "email" => $row['email'],
@@ -96,7 +96,7 @@ class User
             ];
 
             // Send response data
-            echo json_encode(["match" => true, "user" => $_SESSION['loggedInUser']]);
+            echo json_encode(["match" => true, "user" => $userToReturn]);
           } else {
             // Passwords do not match - send response data
             echo json_encode(["match" => false, "other" => "Password not found"]);

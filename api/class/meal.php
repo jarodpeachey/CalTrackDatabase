@@ -45,18 +45,18 @@ class Meal
       if ($result->num_rows > 0) {
         // While there is a row, fetch the data from the result
         while ($row = $result->fetch_assoc()) {
-            $mealToReturn = [
-              "mealID" => $row['mealID'],
-              "mealName" => $row['mealName'],
-              "mealCalories" => $row['mealCalories'],
-              "mealDescription" => $row['mealDescription'],
-              "userID" => $row['userID'],
-            ];
+          $mealToReturn = [
+            "mealID" => $row['mealID'],
+            "mealName" => $row['mealName'],
+            "mealCalories" => $row['mealCalories'],
+            "mealDescription" => $row['mealDescription'],
+            "userID" => $row['userID'],
+          ];
 
-            // Send response data
-            echo json_encode(["success" => true, "meal" => $mealToReturn]);
-          }
+          // Send response data
+          echo json_encode(["success" => true, "meal" => $mealToReturn]);
         }
+      }
     } else {
       die('execute() failed: ' . htmlspecialchars($stmt->error));
       echo json_encode(["success" => false]);

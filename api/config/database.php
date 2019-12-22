@@ -47,6 +47,7 @@ class Database
           mealName VARCHAR(255) NOT NULL,
           mealCalories int NOT NULL,
           mealDescription VARCHAR(255) NOT NULL,
+          mealTimestamp TIMESTAMP NOT NULL,
           userID INT,
           PRIMARY KEY (mealID),
           CONSTRAINT FK_users_meals
@@ -61,6 +62,7 @@ class Database
           workoutName VARCHAR(255) NOT NULL,
           workoutCalories int NOT NULL,
           workoutDescription VARCHAR(255) NOT NULL,
+          workoutTimestamp TIMESTAMP NOT NULL,
           userID INT,
           PRIMARY KEY (workoutID),
           CONSTRAINT FK_users_workouts
