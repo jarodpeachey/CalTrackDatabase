@@ -11,8 +11,13 @@ class Meal
     $this->conn = $db;
   }
 
-  function addMeal($mealName, $mealCalories, $mealDescription, $userID)
+  function addMeal($mealData)
   {
+    $mealName = $mealData['mealName'];
+    $mealCalories = $mealData['mealCalories'];
+    $mealDescription = $mealData['mealDescription'];
+    $userID = $mealData['userID'];
+
     $mealName = htmlspecialchars($mealName);
     $mealCalories = htmlspecialchars($mealCalories);
     $mealDescription = htmlspecialchars($mealDescription);

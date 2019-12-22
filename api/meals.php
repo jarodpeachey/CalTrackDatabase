@@ -28,11 +28,7 @@ switch ($requestMethod) {
     }
     break;
   case 'POST':
-    if (!empty($_GET["userID"]) && !empty($_GET['mealID'])) {
-      // Code for updating meal
-    } else if (!empty($_GET['userID'])) {
-      $meal->addMeal($_POST['mealName'], $_POST['mealCalories'], $_POST['mealDescription'], $_GET['userID']);
-    }
+    $meal->addMeal($_POST);
     break;
   default:
     // Send request header as Method Not Allowed
