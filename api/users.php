@@ -1,14 +1,20 @@
 <?php
 header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Credentials: true");
+header("Content-Type: multipart/form-data");
+header('Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS');
+header("Access-Control-Max-Age: 3600");
+header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Access-Control-Allow-Methods, Access-Control-Allow-Origin, Authorization, X-Requested-With");
 
-// Get the request method and assign it to variable
-$requestMethod = $_SERVER["REQUEST_METHOD"];
+$requestMethod = $_SERVER['REQUEST_METHOD'];
 
-// Include the UserDB.php file
-include('./databases/UserDB.php');
+include('./config/database.php');
+include('./class/user.php');
 
 // Set api to a new Database object
-$api = new UserDB();
+$database = new Database();
+$conn = $database->getConnection();
+$user = new User($conn);
 
 // Check if method === post
 switch ($requestMethod) {
@@ -16,17 +22,21 @@ switch ($requestMethod) {
     if (!empty($_GET["userID"])) {
       if ($_GET["userID"])
       $userID = intval($_GET["userID"]);
-      $api->getUser($userID);
+      $user->getUser($userID);
     }
     // Call the insert user method
-    $api->getUser($_GET);
+    $user->getUser($_GET);
     break;
   case 'POST':
     // Call the insert user method
-    $api->createUser($_POST);
+    $user->createUser($_POST);
+    break;
+  case 'PUT':
+    // Call the update user method
+    $PUT = json_decode(file_get_contents('php://input'));
+
+    $user->updateUser($PUT, $_GET);
     break;
   default:
-    // Send request header as Method Not Allowed
-    header("HTTP/1.0 405 Method Not Allowed");
     break;
 }

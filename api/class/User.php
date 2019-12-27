@@ -50,6 +50,29 @@ class User
     }
   } // End createUser()
 
+  function getUser($userID = 0)
+  {
+    if ($userID != 0) {
+      $query = "SELECT * FROM users WHERE userID='$userID'";
+    } else {
+      $query = "SELECT * FROM users";
+    }
+
+    $response = $this->conn->query($query); 
+
+    // Check if response exists
+    if ($response->num_rows > 0) {
+      $users = [];
+      while ($row = $response->fetch_assoc()) {
+        $response[] = $row;
+      }
+      echo json_encode(["user" => $users, "success" => true]);
+    } else {
+      // No rows exist with that email, send response data
+      echo json_encode(["succes" => false, "message" => "There are no users with that ID. Try again."]);
+    }
+  } // End getUser()
+
   function checkIfEmailExists($email)
   {
     $checkEmailQuery = "SELECT email FROM users WHERE email = '$email'";
@@ -109,6 +132,34 @@ class User
 
     header('Content-Type: application/json');
   } // End verifyUser()
+
+  function updateUser($userPut, $userGet)
+  {
+    $userName = $userPut->name;
+    $userEmail = $userPut->email;
+    $caloriesGained = $userPut->caloriesGained;
+    $caloriesLost = $userPut->caloriesLost;
+    $netCalories = $userPut->netCalories;
+    $userID = $userGet['userID'];
+
+    $userName = htmlspecialchars($userName);
+    $userEmail = htmlspecialchars($userEmail);
+    $caloriesGained = htmlspecialchars($caloriesGained);
+    $caloriesLost = htmlspecialchars($caloriesLost);
+    $netCalories = htmlspecialchars($netCalories);
+
+    $updateUserQuery = "UPDATE users SET username='$userName', email='$userEmail' caloriesGained='$caloriesGained', caloriesLost='$caloriesLost', netCalories='$netCalories' WHERE userID='$userID'";
+    $response = $this->conn->query($updateUserQuery);
+
+    // Check if query succeeded and send response
+    if ($response) {
+      echo json_encode(["success" => true]);
+    } else {
+      echo json_encode(["success" => false, "error" => htmlspecialchars($response->error)]);
+    }
+
+    header('Content-Type: application/json');
+  } // End updateUser()
 
   function getMeals($userID)
   {
