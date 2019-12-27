@@ -148,7 +148,7 @@ class User
     $caloriesLost = htmlspecialchars($caloriesLost);
     $netCalories = htmlspecialchars($netCalories);
 
-    $updateUserQuery = "UPDATE users SET username='$userName', email='$userEmail' caloriesGained='$caloriesGained', caloriesLost='$caloriesLost', netCalories='$netCalories' WHERE userID='$userID'";
+    $updateUserQuery = "UPDATE users SET caloriesGained='$caloriesGained', netCalories='$netCalories', caloriesLost='$caloriesLost', username='$userName', email='$userEmail' WHERE userID='$userID'";
     $response = $this->conn->query($updateUserQuery);
 
     // Check if query succeeded and send response
