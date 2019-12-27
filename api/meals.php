@@ -28,8 +28,10 @@ switch ($requestMethod) {
     }
     break;
   case 'POST':
-    $meal->addMeal($_POST);
+    $meal->addMeal($_POST, $_GET);
     break;
   case 'PUT':
-    $meal->addMeal($_PUT);
+    $PUT = json_decode(file_get_contents('php://input'));
+
+    $meal->updateMeal($PUT, $_GET);
 }
