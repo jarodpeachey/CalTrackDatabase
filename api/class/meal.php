@@ -67,8 +67,6 @@ class Meal
 
   function updateMeal($mealPut, $mealGet)
   {
-    echo json_encode(["mealPut" => $mealPut]);
-
     $mealName = $mealPut->mealName;
     $mealCalories = $mealPut->mealCalories;
     $mealDescription = $mealPut->mealDescription;
@@ -84,7 +82,7 @@ class Meal
     // Check if query succeeded and send response
     if ($response) {
       // $getMealQuery = "SELECT mealID,mealName,mealCalories,mealDescription FROM meals WHERE mealTimestamp='$mealTimestamp'";
-      $lastID = $this->conn->insert_id;
+      $lastID = $mealID;
       $selectQuery = "SELECT mealID,mealName,mealCalories,mealDescription,userID FROM meals WHERE mealID='$lastID'";
       $result = $this->conn->query($selectQuery);
 
