@@ -34,4 +34,6 @@ switch ($requestMethod) {
     $PUT = json_decode(file_get_contents('php://input'));
 
     $meal->updateMeal($PUT, $_GET);
+  case 'DELETE':
+    $meal->deleteMeal($_GET['mealID']);
 }

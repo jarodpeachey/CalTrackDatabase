@@ -88,5 +88,21 @@ class Meal
     }
 
     header('Content-Type: application/json');
-  } // End createmeal()
+  } // End updateMeal()
+
+  function deleteMeal($mealID)
+  {
+    $deleteMealQuery = "DELETE FROM meals WHERE mealID='$mealID'";
+    $response = $this->conn->query($deleteMealQuery);
+
+    // Check if query succeeded and send response
+    if ($response) {
+      echo json_encode(["success" => true, "mealID" => $mealID]);
+    } else {
+      die('execute() failed: ' . htmlspecialchars($response->error));
+      echo json_encode(["success" => false]);
+    }
+
+    header('Content-Type: application/json');
+  } // End deleteMeal()
 }
