@@ -1,12 +1,12 @@
 <?php
 header("Access-Control-Allow-Origin: *");
-header("Content-Type: application/json; charset=UTF-8");
+header("Access-Control-Allow-Credentials: true");
+header("Content-Type: multipart/form-data");
 header('Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS');
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Access-Control-Allow-Methods, Access-Control-Allow-Origin, Authorization, X-Requested-With");
 
-// Get the request method and assign it to variable
-$requestMethod = $_SERVER["REQUEST_METHOD"];
+$requestMethod = $_SERVER['REQUEST_METHOD'];
 
 include('./config/database.php');
 include('./class/workout.php');
@@ -28,10 +28,20 @@ switch ($requestMethod) {
     }
     break;
   case 'POST':
-    $workout->addWorkout($_POST);
+    $workout->addWorkout($_POST, $_GET);
     break;
-  default:
-    // Send request header as Method Not Allowed
-    header("HTTP/1.0 405 Method Not Allowed");
-    break;
+  case 'PUT':
+    if (!empty($_GET["userID"])) {
+      $PUT = json_decode(file_get_contents('php://input'));
+
+      $workout->updateWorkout($PUT, $_GET);
+    } else {
+      // header("HTTP/1.1 304 Method Not Allowed");
+    }
+  case 'DELETE':
+    if (!empty($_GET["userID"])) {
+      // header("HTTP/1.1 304 Method Not Allowed");
+    } else {
+      $workout->deleteWorkout($_GET['workoutID']);
+    }
 }
