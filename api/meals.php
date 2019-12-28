@@ -31,9 +31,17 @@ switch ($requestMethod) {
     $meal->addMeal($_POST, $_GET);
     break;
   case 'PUT':
-    $PUT = json_decode(file_get_contents('php://input'));
+    if (!empty($_GET["userID"])) {
+      $PUT = json_decode(file_get_contents('php://input'));
 
-    $meal->updateMeal($PUT, $_GET);
+      $meal->updateMeal($PUT, $_GET);
+    } else {
+      // header("HTTP/1.1 304 Method Not Allowed");
+    }
   case 'DELETE':
-    $meal->deleteMeal($_GET['mealID']);
+    if (!empty($_GET["userID"])) {
+      // header("HTTP/1.1 304 Method Not Allowed");
+    } else {
+      $meal->deleteMeal($_GET['mealID']);
+    }
 }
