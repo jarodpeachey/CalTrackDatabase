@@ -21,7 +21,7 @@ switch ($requestMethod) {
   case 'GET':
     if (!empty($_GET["userID"])) {
       if ($_GET["userID"])
-      $userID = intval($_GET["userID"]);
+        $userID = intval($_GET["userID"]);
       $user->getUser($userID);
     }
     // Call the insert user method
@@ -37,6 +37,8 @@ switch ($requestMethod) {
 
     $user->updateUser($PUT, $_GET);
     break;
+  case 'DELETE':
+    $user->deleteUser(intval($_GET['userID']));
   default:
     break;
 }

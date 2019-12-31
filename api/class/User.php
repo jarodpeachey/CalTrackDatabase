@@ -161,6 +161,21 @@ class User
     header('Content-Type: application/json');
   } // End updateUser()
 
+  function deleteUser($userID)
+  {
+    $deleteUserQuery = "DELETE FROM users WHERE userID='".$userID."'";
+    $response = $this->conn->query($deleteUserQuery);
+
+    // Check if query succeeded and send response
+    if ($response) {
+      echo json_encode(["success" => true]);
+    } else {
+      echo json_encode(["success" => false, "error" => htmlspecialchars($response->error)]);
+    }
+
+    header('Content-Type: application/json');
+  } // End deleteUser()
+
   function getMeals($userID)
   {
     $meals = [];
